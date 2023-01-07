@@ -7,7 +7,7 @@ name = "waifuim"
 description="A Python wrapper for the Waifu.im API"
 readme = "README.md"
 python_requires = ">=3.10"
-license = {text = "MIT License", file = "LICENSE"}
+license = {file = "LICENSE"}
 dependencies = [
     "aiohttp",
     "typing_extensions",
