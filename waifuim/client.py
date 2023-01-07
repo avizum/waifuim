@@ -24,7 +24,7 @@ SOFTWARE.
 
 from __future__ import annotations
 
-from typing import Any, Literal, overload
+from typing import Any, Literal, Sequence, overload
 
 import aiohttp
 
@@ -113,15 +113,15 @@ class Client:
         self,
         /,
         *,
-        included_tags: list[str] | None = ...,
-        excluded_tags: list[str] | None = ...,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
         order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
         orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
         multiple: Literal[False] = ...,
-        included_files: list[str] | None = ...,
-        excluded_files: list[str] | None = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
         return_raw: Literal[False] = ...,
     ) -> Image:
         ...
@@ -131,15 +131,15 @@ class Client:
         self,
         /,
         *,
-        included_tags: list[str] | None = ...,
-        excluded_tags: list[str] | None = ...,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
         order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
         orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
         multiple: Literal[True] = ...,
-        included_files: list[str] | None = ...,
-        excluded_files: list[str] | None = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
         return_raw: Literal[False] = ...,
     ) -> list[Image]:
         ...
@@ -149,15 +149,15 @@ class Client:
         self,
         /,
         *,
-        included_tags: list[str] | None = ...,
-        excluded_tags: list[str] | None = ...,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
         order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
         orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
         multiple: bool = ...,
-        included_files: list[str] | None = ...,
-        excluded_files: list[str] | None = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
         return_raw: bool = True,
     ) -> ImageResponseData:
         ...
@@ -166,15 +166,15 @@ class Client:
         self,
         /,
         *,
-        included_tags: list[str] | None = None,
-        excluded_tags: list[str] | None = None,
+        included_tags: Sequence[str] | None = None,
+        excluded_tags: Sequence[str] | None = None,
         nsfw: bool = False,
         gif: bool | None = None,
         order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = "RANDOM",
         orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = None,
         multiple: bool = False,
-        included_files: list[str] | None = None,
-        excluded_files: list[str] | None = None,
+        included_files: Sequence[str] | None = None,
+        excluded_files: Sequence[str] | None = None,
         return_raw: bool = False,
     ) -> Image | list[Image] | ImageResponseData:
         """
@@ -182,9 +182,9 @@ class Client:
 
         Parameters
         ----------
-        included_tags: :class:`list[str]` | :class:`None`
+        included_tags: :class:`Sequence[str]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`list[str]` | :class:`None`
+        excluded_tags: :class:`Sequence[str]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -196,9 +196,9 @@ class Client:
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`list[str]` | :class:`None`
+        included_files: :class:`Sequence[str]` | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`list[str]` | :class:`None`
+        excluded_files: :class:`Sequence[str]` | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.
@@ -237,20 +237,78 @@ class Client:
             return Image.from_dict(image_data[0])
         return [Image.from_dict(image) for image in image_data]
 
+
+    @overload
     async def favourites(
         self,
         /,
         *,
         user_id: int,
-        included_tags: list[str] | None = None,
-        excluded_tags: list[str] | None = None,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
+        nsfw: bool = ...,
+        gif: bool | None = ...,
+        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
+        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        multiple: Literal[False] = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
+        return_raw: Literal[False] = ...,
+    ) -> Image:
+        ...
+
+    @overload
+    async def favourites(
+        self,
+        /,
+        *,
+        user_id: int,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
+        nsfw: bool = ...,
+        gif: bool | None = ...,
+        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
+        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        multiple: Literal[True] = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
+        return_raw: Literal[False] = ...,
+    ) -> list[Image]:
+        ...
+
+    @overload
+    async def favourites(
+        self,
+        /,
+        *,
+        user_id: int,
+        included_tags: Sequence[str] | None = ...,
+        excluded_tags: Sequence[str] | None = ...,
+        nsfw: bool = ...,
+        gif: bool | None = ...,
+        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
+        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        multiple: bool = ...,
+        included_files: Sequence[str] | None = ...,
+        excluded_files: Sequence[str] | None = ...,
+        return_raw: bool = True,
+    ) -> ImageResponseData:
+        ...
+
+    async def favourites(
+        self,
+        /,
+        *,
+        user_id: int,
+        included_tags: Sequence[str] | None = None,
+        excluded_tags: Sequence[str] | None = None,
         nsfw: bool = False,
         gif: bool | None = None,
         order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = "RANDOM",
         orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = None,
         multiple: bool = False,
-        included_files: list[str] | None = None,
-        excluded_files: list[str] | None = None,
+        included_files: Sequence[str] | None = None,
+        excluded_files: Sequence[str] | None = None,
         return_raw: bool = False,
     ):
         """
@@ -260,9 +318,9 @@ class Client:
         ----------
         user_id: :class:`int`
             The ID of the user to get the favourites of.
-        included_tags: :class:`list[str]` | :class:`None`
+        included_tags: :class:`Sequence[str]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`list[str]` | :class:`None`
+        excluded_tags: :class:`Sequence[str]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -274,9 +332,9 @@ class Client:
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`list[str]` | :class:`None`
+        included_files: :class:`Sequence[str]` | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`list[str]` | :class:`None`
+        excluded_files: :class:`Sequence[str]` | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.

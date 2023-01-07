@@ -26,7 +26,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import TYPE_CHECKING, TypedDict
+from typing import Sequence, TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
     from typing_extensions import NotRequired
@@ -68,15 +68,15 @@ class ImageData(TypedDict):
 
 class ImageParams(TypedDict):
     user_id: NotRequired[int]
-    included_tags: list[str] | None
-    excluded_tags: list[str] | None
+    included_tags: Sequence[str] | None
+    excluded_tags: Sequence[str] | None
     is_nsfw: bool | None
     gif: bool | None
     order_by: str | None
     orientation: str | None
     many: bool | None
-    included_files: list[str] | None
-    excluded_files: list[str] | None
+    included_files: Sequence[str] | None
+    excluded_files: Sequence[str] | None
 
 
 class EditFavouriteParams(TypedDict):
