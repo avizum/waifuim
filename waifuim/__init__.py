@@ -1,5 +1,5 @@
 """
-MIT License
+Waifu.im API Wrapper for Python 3.10+
 
 Copyright (c) 2023 Avimetry Development
 

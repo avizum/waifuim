@@ -32,7 +32,7 @@ if TYPE_CHECKING:
 
 class WaifuImExcpetion(Exception):
     """
-    Base exception for waifu.im
+    Base exception for waifuim. All other exceptions inherit from this.
     """
 
 
@@ -70,7 +70,7 @@ class Unauthorized(HTTPException):
 
 class InvalidArgument(WaifuImExcpetion):
     """
-    Exception for invalid arguments.
+    Raised when an invalid argument is passed.
     """
 
     def __init__(self, argument: Any, message: str):

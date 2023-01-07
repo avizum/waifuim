@@ -328,6 +328,10 @@ class Client:
 
         Will return :class:`None` if successful.
 
+        .. note::
+            The user must have authorized your application to edit their favourites.
+            See :meth:`utils.create_authorization_url` for more information.
+
         Parameters
         ----------
         user_id: :class:`int`
@@ -352,11 +356,13 @@ class Client:
 
         return await self._request(Request("POST", "/fav/insert"), json=params)
 
-    async def favourites_delete(self, /, *, user_id: int, image: Image | int) -> Any:
+    async def favourites_delete(self, /, *, user_id: int, image: Image | int) -> None:
         """
         Remove an image from a user's favourites.
 
-        Will return :class:`None` if successful.
+        .. note::
+            The user must have authorized your application to edit their favourites.
+            See :meth:`utils.create_authorization_url` for more information.
 
         Parameters
         ----------
@@ -382,11 +388,13 @@ class Client:
 
         return await self._request(Request("DELETE", "/fav/delete"), json=params)
 
-    async def favourites_toggle(self, /, *, user_id: int, image: Image | int) -> Any:
+    async def favourites_toggle(self, /, *, user_id: int, image: Image | int) -> None:
         """
         Insert or Reomve an image into a user's favourites.
 
-        Will return :class:`None` if successful.
+        .. note::
+            The user must have authorized your application to edit their favourites.
+            See :meth:`utils.create_authorization_url` for more information.
 
         Parameters
         ----------

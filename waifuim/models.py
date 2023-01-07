@@ -33,6 +33,9 @@ if TYPE_CHECKING:
 
 
 class ImageResponseData(TypedDict):
+    """
+    Represents the raw image response data from the API.
+    """
     images: list[ImageData]
 
 
@@ -47,7 +50,6 @@ class ImageData(TypedDict):
     """
     Class representing the data of an image.
     """
-
     signature: str
     extension: str
     image_id: int
