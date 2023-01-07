@@ -6,13 +6,27 @@ build-backend = "setuptools.build_meta"
 name = "waifuim"
 description="A Python wrapper for the Waifu.im API"
 readme = "README.md"
-python_requires = ">=3.10"
-license = {file = "LICENSE"}
+requires-python = ">=3.10"
+license = {text = "MIT License"}
 dependencies = [
     "aiohttp",
     "typing_extensions",
 ]
 dynamic = ["version"]
+authors = [
+    {name = "Avimetry Development"},
+    {name = "avizum", email = "juliusrt@outlook.com"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Natural Language :: English",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+
+[project.urls]
+homepage = "https://github.com/avimetry/waifuim"
+documentation = "https://readthedocs.io"
+repository = "https://github.com/avimetry/waifuim"
 
 [tool.setuptools.dynamic]
 version = {attr = "waifuim.__version__"}
