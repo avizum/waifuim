@@ -1,0 +1,27 @@
+[tool.black]
+line-length = 125
+
+[tool.isort]
+profile = "black"
+line_length = 125
+force_alphabetical_sort_within_sections = true
+
+[tool.pyright]
+typeCheckingMode = "basic"
+
+[tool.poetry]
+name = "waifuim"
+version = "1.0.0"
+description = "A waifu.im API wrapper in Python"
+authors = ["Avimetry Development"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10"
+aiohttp = "^3.8.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
