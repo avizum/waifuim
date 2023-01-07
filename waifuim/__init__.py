@@ -27,6 +27,9 @@ from .exceptions import WaifuImExcpetion, HTTPException, NotFound, Forbidden, Un
 from .models import ImageResponseData, Tag, Image
 from .utils import generate_authorization_link, generate_deauthorization_link
 
+
+__version__ = "1.0.0"
+
 __all__ = (
     "Client",
     "WaifuImExcpetion",

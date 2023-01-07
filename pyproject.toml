@@ -1,3 +1,22 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "waifuim"
+description="A Python wrapper for the Waifu.im API"
+readme = "README.md"
+python_requires = ">=3.10"
+license = {text = "MIT License", file = "LICENSE"}
+dependencies = [
+    "aiohttp",
+    "typing_extensions",
+]
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "waifuim.__version__"}
+
 [tool.black]
 line-length = 125
 
@@ -8,20 +27,3 @@ force_alphabetical_sort_within_sections = true
 
 [tool.pyright]
 typeCheckingMode = "basic"
-
-[tool.poetry]
-name = "waifuim"
-version = "1.0.0"
-description = "A waifu.im API wrapper in Python"
-authors = ["Avimetry Development"]
-license = "MIT"
-readme = "README.md"
-
-[tool.poetry.dependencies]
-python = ">=3.10"
-aiohttp = "^3.8.3"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
