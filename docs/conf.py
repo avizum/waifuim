@@ -29,9 +29,6 @@ extensions: list[str] = [
 
 exclude_patters: list[str] = ["_build", "Thumbs.db", ".DS_Store"]
 
-needs_sphinx: str = "6.1.1"
-nitpicky: bool = True
-
 
 # -- Options for HTML output --
 
