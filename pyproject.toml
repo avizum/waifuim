@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "waifuim"
 description="A Python wrapper for the Waifu.im API"
-readme = "README.md"
+readme = "README.rst"
 requires-python = ">=3.10"
 license = {text = "MIT License"}
 dependencies = [
