@@ -28,7 +28,7 @@ from .models import ImageResponseData, Tag, Image
 from .utils import generate_authorization_link, generate_deauthorization_link
 
 
-__version__ = "1.0.0a"
+__version__ = "1.0.0post1"
 
 __all__ = (
     "Client",
