@@ -314,6 +314,10 @@ class Client:
         """
         Get a user's favourites
 
+        .. note::
+            The user must have authorized your application to access their favourites.
+            See :meth:`generate_authorization_link`.
+
         Parameters
         ----------
         user_id: :class:`int`
@@ -384,11 +388,9 @@ class Client:
         """
         Insert an image into a user's favourites.
 
-        Will return :class:`None` if successful.
-
         .. note::
             The user must have authorized your application to edit their favourites.
-            See :meth:`utils.create_authorization_url` for more information.
+            See :meth:`utils.generate_authorization_link`.
 
         Parameters
         ----------
@@ -420,7 +422,7 @@ class Client:
 
         .. note::
             The user must have authorized your application to edit their favourites.
-            See :meth:`utils.create_authorization_url` for more information.
+            See :meth:`utils.generate_authorization_link`.
 
         Parameters
         ----------
@@ -452,7 +454,7 @@ class Client:
 
         .. note::
             The user must have authorized your application to edit their favourites.
-            See :meth:`utils.create_authorization_url` for more information.
+            See :meth:`utils.generate_authorization_link`.
 
         Parameters
         ----------

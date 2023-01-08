@@ -23,9 +23,9 @@ Models
 Utils
 -----
 
-.. autofunction:: get_themes
+.. autofunction:: generate_authorization_link
 
-.. autofunction:: get_languages
+.. autofunction:: generate_deauthorization_link
 
 
 Exceptions

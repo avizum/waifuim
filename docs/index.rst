@@ -14,6 +14,6 @@ A wafiu.im API wrapper for Python.
 
 
 .. toctree::
-    :caption: API Reference
+    :caption: Reference
 
     pages/reference
