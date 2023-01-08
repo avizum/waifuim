@@ -1,8 +1,8 @@
 .. py:currentmodule:: waifuim
 
 
-API Reference
-=============
+Reference
+=========
 
 Client
 --------

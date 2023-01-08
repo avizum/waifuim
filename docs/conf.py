@@ -45,9 +45,7 @@ html_static_path: list[str] = ["static"]
 autoclass_content: str = "class"
 autodoc_class_signature: str = "mixed"
 autodoc_member_order: str = "bysource"
-autodoc_default_options: dict[str, Any] = {"undoc-members": True}
 autodoc_typehints: str = "signature"
-autodoc_type_aliases: dict[str, str] = {}
 autodoc_typehints_format: str = "short"
 
 intersphinx_mapping: dict[str, tuple[str, None]] = {
