@@ -24,7 +24,7 @@ SOFTWARE.
 
 from .client import Client
 from .exceptions import WaifuImExcpetion, HTTPException, NotFound, Forbidden, Unauthorized
-from .models import ImageResponseData, Tag, Image
+from .models import ImageResponseData, Tag, Image, Tags, Order, Orientation
 from .utils import generate_authorization_link, generate_deauthorization_link
 
 
@@ -40,6 +40,9 @@ __all__ = (
     "ImageResponseData",
     "Tag",
     "Image",
+    "Tags",
+    "Order",
+    "Orientation",
     "generate_authorization_link",
     "generate_deauthorization_link",
 )
