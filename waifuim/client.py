@@ -187,23 +187,23 @@ class Client:
 
         Parameters
         ----------
-        included_tags: :class:`Sequence[Tag | str]` | :class:`None`
+        included_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[Tag | str]` | :class:`None`
+        excluded_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
         gif: :class:`bool` | :class:`None`
             Whether to return GIFs.
-        order_by: :class:`Literal["FAVOURITES", "UPLOADED_AT", "RANDOM"]`
-            How to order the images. Defaults to ``RANDOM``.
-        orientation: :class:`Literal["PORTRAIT", "LANDSCAPE"]` | :class:`None`
+        order_by: :class:`Order`
+            How to order the images. Defaults to :attr:`Order.RANDOM`.
+        orientation: :class:`Orientation` | :class:`None`
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`Sequence[str]` | :class:`None`
+        included_files: :class:`Sequence[:class:`str`]` | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`Sequence[str]` | :class:`None`
+        excluded_files: :class:`Sequence[:class:`str`]` | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.
@@ -217,7 +217,7 @@ class Client:
 
         Returns
         -------
-        :class:`Image` | :class:`list[Image]` | :class:`ImageResponseData`
+        :class:`Image` | :class:`list[:class:`Image`]` | :class:`ImageResponseData`
             The image(s) returned from the API.
         """
         params: ImageParams = {
@@ -313,9 +313,9 @@ class Client:
         included_files: Sequence[str] | None = None,
         excluded_files: Sequence[str] | None = None,
         return_raw: bool = False,
-    ):
+    ) -> Image | list[Image] | ImageResponseData:
         """
-        Get a user's favourites
+        Get a user's favourites.
 
         .. note::
             The user must have authorized your application to access their favourites.
@@ -325,23 +325,23 @@ class Client:
         ----------
         user_id: :class:`int`
             The ID of the user to get the favourites of.
-        included_tags: :class:`Sequence[Tag | str]` | :class:`None`
+        included_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[Tag | str]` | :class:`None`
+        excluded_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
         gif: :class:`bool` | :class:`None`
             Whether to return GIFs.
-        order_by: :class:`Literal["FAVOURITES", "UPLOADED_AT", "RANDOM"]`
-            How to order the images. Defaults to ``RANDOM``.
-        orientation: :class:`Literal["PORTRAIT", "LANDSCAPE"]` | :class:`None`
+        order_by: :class:`Order`
+            How to order the images. Defaults to :attr:`Order.RANDOM`.
+        orientation: :class:`Orientation` | :class:`None`
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`Sequence[str]` | :class:`None`
+        included_files: :class:`Sequence[:class:`str`]` | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`Sequence[str]` | :class:`None`
+        excluded_files: :class:`Sequence[:class:`str`]` | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.
@@ -359,7 +359,7 @@ class Client:
 
         Returns
         -------
-        :class:`Image` | :class:`list[Image]` | :class:`ImageResponseData`
+        :class:`Image` | :class:`list[:class:`Image`]` | :class:`ImageResponseData`
             The image(s) returned from the API.
         """
         params: ImageParams = {
