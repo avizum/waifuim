@@ -26,10 +26,56 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 from typing import Sequence, TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
     from typing_extensions import NotRequired
+
+
+class Tags(Enum):
+    MAID = "MAID"
+    WAIFU = "WAIFU"
+    MARIN_KITAGAWA = "MARIN-KITAGAWA"
+    MORI_CALLIOPE = "MORI-CALLIOPE"
+    RAIDEN_SHOGUN = "RAIDEN-SHOGUN"
+    OPPAI = "OPPAI"
+    SELFIES = "SELFIES"
+    UNIFORM = "UNIFORM"
+    ASS = "ASS"
+    HENTAI = "HENTAI"
+    MILF = "MILF"
+    ORAL = "ORAL"
+    PAIZURI = "PAIZURI"
+    ECCHI = "ECCHI"
+
+    @classmethod
+    def from_str(cls, string: str) -> Tags | None:
+        """
+        Get a Tag with its name.
+
+        If your input is not found, :class:`None` will be returned.
+        """
+        string = string.upper()
+        members = {}
+        for i, v in cls.__members__.items():
+            members[i] = v
+            members[v.value] = v
+
+        return members.get(string, None)
+
+
+class Orientation(Enum):
+    PORTRAIT = "PORTRAIT"
+    LANDSCAPE = "LANDSCAPE"
+
+
+class Order(Enum):
+    FAVOURITES = "FAVOURITES"
+    FAVORITES = "FAVOURITES"
+    UPLOADED = "UPLOADED_AT"
+    UPLOADED_AT = "UPLOADED_AT"
+    RANDOM = "RANDOM"
 
 
 class ImageResponseData(TypedDict):
@@ -68,12 +114,12 @@ class ImageData(TypedDict):
 
 class ImageParams(TypedDict):
     user_id: NotRequired[int]
-    included_tags: Sequence[str] | None
-    excluded_tags: Sequence[str] | None
+    included_tags: Sequence[Tags | str] | None
+    excluded_tags: Sequence[Tags | str] | None
     is_nsfw: bool | None
     gif: bool | None
-    order_by: str | None
-    orientation: str | None
+    order_by: Order | None
+    orientation: Orientation | None
     many: bool | None
     included_files: Sequence[str] | None
     excluded_files: Sequence[str] | None

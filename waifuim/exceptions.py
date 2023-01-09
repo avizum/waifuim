@@ -66,14 +66,3 @@ class Unauthorized(HTTPException):
     """
     Raised when a 401 error is encountered.
     """
-
-
-class InvalidArgument(WaifuImExcpetion):
-    """
-    Raised when an invalid argument is passed.
-    """
-
-    def __init__(self, argument: Any, message: str):
-        self.message = message
-        self.argument = argument
-        super().__init__(message)

@@ -20,6 +20,15 @@ Models
 .. autoclass:: ImageResponseData
     :members:
 
+.. autoclass:: Tags
+    :members:
+
+.. autoclass:: Order
+    :members:
+
+.. autoclass:: Orientation
+    :members:
+
 Utils
 -----
 
@@ -44,7 +53,4 @@ Exceptions
     :members:
 
 .. autoclass:: Unauthorized
-    :members:
-
-.. autoclass:: InvalidArgument
     :members:

@@ -23,12 +23,12 @@ SOFTWARE.
 """
 
 from .client import Client
-from .exceptions import WaifuImExcpetion, HTTPException, NotFound, Forbidden, Unauthorized, InvalidArgument
+from .exceptions import WaifuImExcpetion, HTTPException, NotFound, Forbidden, Unauthorized
 from .models import ImageResponseData, Tag, Image
 from .utils import generate_authorization_link, generate_deauthorization_link
 
 
-__version__ = "1.0.0post1"
+__version__ = "1.0.1"
 
 __all__ = (
     "Client",
@@ -37,7 +37,6 @@ __all__ = (
     "NotFound",
     "Forbidden",
     "Unauthorized",
-    "InvalidArgument",
     "ImageResponseData",
     "Tag",
     "Image",

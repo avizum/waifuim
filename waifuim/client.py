@@ -25,11 +25,11 @@ SOFTWARE.
 from __future__ import annotations
 
 from typing import Any, Literal, Sequence, overload
-
+from enum import Enum
 import aiohttp
 
-from .exceptions import Forbidden, HTTPException, InvalidArgument, NotFound, Unauthorized
-from .models import EditFavouriteParams, Image, ImageParams, ImageResponseData
+from .exceptions import Forbidden, HTTPException, NotFound, Unauthorized
+from .models import EditFavouriteParams, Image, ImageParams, ImageResponseData, Order, Orientation, Tags
 
 BASE_URL: str = "https://api.waifu.im"
 
@@ -98,12 +98,17 @@ class Client:
 
     @staticmethod
     def _to_params(data: ImageParams) -> dict[str, Any]:
-        orientation = data["orientation"]
-        order_by = data["order_by"]
-        if orientation and orientation not in ("PORTRAIT", "LANDSCAPE"):
-            raise InvalidArgument(orientation, f"Expected 'PORTRAIT' or 'LANDSCAPE', got {orientation!r}")
-        elif order_by and order_by not in ("FAVORITES", "UPLOADED_AT", "RANDOM"):
-            raise InvalidArgument(data["order_by"], f"Expected 'FAVORITES', 'UPLOADED_AT' or 'RANDOM', got {order_by!r}")
+        for key, value in data.items():
+            if isinstance(value, (list, tuple, set)):
+                new_value = []
+                for i in value:
+                    if isinstance(i, Enum):
+                        new_value.append(i.value)
+                    else:
+                        new_value.append(i)
+                data[key] = new_value
+            if isinstance(value, Enum):
+                data[key] = value.value
         return {
             key: str(value).lower() if isinstance(value, bool) else value for key, value in data.items() if value is not None
         }
@@ -113,12 +118,12 @@ class Client:
         self,
         /,
         *,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: Literal[False] = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -131,12 +136,12 @@ class Client:
         self,
         /,
         *,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: Literal[True] = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -149,12 +154,12 @@ class Client:
         self,
         /,
         *,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: bool = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -166,12 +171,12 @@ class Client:
         self,
         /,
         *,
-        included_tags: Sequence[str] | None = None,
-        excluded_tags: Sequence[str] | None = None,
+        included_tags: Sequence[Tags | str] | None = None,
+        excluded_tags: Sequence[Tags | str] | None = None,
         nsfw: bool = False,
         gif: bool | None = None,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = "RANDOM",
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = None,
+        order_by: Order = Order.RANDOM,
+        orientation: Orientation | None = None,
         multiple: bool = False,
         included_files: Sequence[str] | None = None,
         excluded_files: Sequence[str] | None = None,
@@ -182,9 +187,9 @@ class Client:
 
         Parameters
         ----------
-        included_tags: :class:`Sequence[str]` | :class:`None`
+        included_tags: :class:`Sequence[Tag | str]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[str]` | :class:`None`
+        excluded_tags: :class:`Sequence[Tag | str]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -205,8 +210,6 @@ class Client:
 
         Raises
         ------
-        :class:`InvalidArgument`
-            Argument passed into `order_by` or `orientation` is invalid.
         :class:`NotFound`
             No images were found matching your search.
         :class:`HTTPException`
@@ -244,12 +247,12 @@ class Client:
         /,
         *,
         user_id: int,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: Literal[False] = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -263,12 +266,12 @@ class Client:
         /,
         *,
         user_id: int,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: Literal[True] = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -282,12 +285,12 @@ class Client:
         /,
         *,
         user_id: int,
-        included_tags: Sequence[str] | None = ...,
-        excluded_tags: Sequence[str] | None = ...,
+        included_tags: Sequence[Tags | str] | None = ...,
+        excluded_tags: Sequence[Tags | str] | None = ...,
         nsfw: bool = ...,
         gif: bool | None = ...,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = ...,
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = ...,
+        order_by: Order = ...,
+        orientation: Orientation | None = ...,
         multiple: bool = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
@@ -300,12 +303,12 @@ class Client:
         /,
         *,
         user_id: int,
-        included_tags: Sequence[str] | None = None,
-        excluded_tags: Sequence[str] | None = None,
+        included_tags: Sequence[Tags | str] | None = None,
+        excluded_tags: Sequence[Tags | str] | None = None,
         nsfw: bool = False,
         gif: bool | None = None,
-        order_by: Literal["FAVORITES", "UPLOADED_AT", "RANDOM"] = "RANDOM",
-        orientation: Literal["PORTRAIT", "LANDSCAPE"] | None = None,
+        order_by: Order = Order.RANDOM,
+        orientation: Orientation | None = None,
         multiple: bool = False,
         included_files: Sequence[str] | None = None,
         excluded_files: Sequence[str] | None = None,
@@ -322,9 +325,9 @@ class Client:
         ----------
         user_id: :class:`int`
             The ID of the user to get the favourites of.
-        included_tags: :class:`Sequence[str]` | :class:`None`
+        included_tags: :class:`Sequence[Tag | str]` | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[str]` | :class:`None`
+        excluded_tags: :class:`Sequence[Tag | str]` | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -345,8 +348,6 @@ class Client:
 
         Raises
         ------
-        :class:`InvalidArgument`
-            Argument passed into `order_by` or `orientation` is invalid.
         :class:`NotFound`
             No images were found matching your search.
         :class:`Unauthorized`
