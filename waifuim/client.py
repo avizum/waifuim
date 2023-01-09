@@ -187,9 +187,9 @@ class Client:
 
         Parameters
         ----------
-        included_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
+        included_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
+        excluded_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -201,9 +201,9 @@ class Client:
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`Sequence[:class:`str`]` | :class:`None`
+        included_files: Sequence[:class:`str`] | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`Sequence[:class:`str`]` | :class:`None`
+        excluded_files: Sequence[:class:`str`] | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.
@@ -217,7 +217,7 @@ class Client:
 
         Returns
         -------
-        :class:`Image` | :class:`list[:class:`Image`]` | :class:`ImageResponseData`
+        :class:`Image` | list[:class:`Image`] | :class:`ImageResponseData`
             The image(s) returned from the API.
         """
         params: ImageParams = {
@@ -325,9 +325,9 @@ class Client:
         ----------
         user_id: :class:`int`
             The ID of the user to get the favourites of.
-        included_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
+        included_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
             Will only return images with these tags.
-        excluded_tags: :class:`Sequence[:class:`Tag` | :class:`str`]` | :class:`None`
+        excluded_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
             Will not return images with these tags.
         nsfw: :class:`bool`
             Whether to return NSFW images. Defaults to ``False``.
@@ -339,9 +339,9 @@ class Client:
             The orientation of the images.
         multiple: :class:`bool`
             Whether to return multiple images. Returns 30. Defaults to ``False``.
-        included_files: :class:`Sequence[:class:`str`]` | :class:`None`
+        included_files: Sequence[:class:`str`] | :class:`None`
             Only return images with these files.
-        excluded_files: :class:`Sequence[:class:`str`]` | :class:`None`
+        excluded_files: Sequence[:class:`str`] | :class:`None`
             Do not return images with these files.
         return_raw: :class:`bool` | :class:`None`
             Whether to return the raw response data.
@@ -359,7 +359,7 @@ class Client:
 
         Returns
         -------
-        :class:`Image` | :class:`list[:class:`Image`]` | :class:`ImageResponseData`
+        :class:`Image` | list[:class:`Image`] | :class:`ImageResponseData`
             The image(s) returned from the API.
         """
         params: ImageParams = {
