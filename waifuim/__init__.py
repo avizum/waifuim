@@ -28,7 +28,7 @@ from .models import ImageResponseData, Tag, Image, Tags, Order, Orientation
 from .utils import generate_authorization_link, generate_deauthorization_link
 
 
-__version__ = "1.0.1"
+__version__ = "1.0.3"
 
 __all__ = (
     "Client",
