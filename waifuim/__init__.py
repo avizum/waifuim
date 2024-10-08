@@ -1,7 +1,7 @@
 """
 Waifu.im API Wrapper for Python 3.10+
 
-Copyright (c) 2023 Avimetry Development
+Copyright (c) 2024 avizum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,10 +23,9 @@ SOFTWARE.
 """
 
 from .client import Client
-from .exceptions import WaifuImExcpetion, HTTPException, NotFound, Forbidden, Unauthorized
-from .models import ImageResponseData, Tag, Image, Tags, Order, Orientation
+from .exceptions import Forbidden, HTTPException, NotFound, Unauthorized, WaifuImExcpetion
+from .models import Image, ImageResponseData, Order, Orientation, Tag, Tags
 from .utils import generate_authorization_link, generate_deauthorization_link
-
 
 __version__ = "1.0.3"
 

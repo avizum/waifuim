@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "waifuim"
 description="A Python wrapper for the Waifu.im API"
 readme = "README.rst"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "MIT License"}
 dependencies = [
     "aiohttp",
@@ -18,7 +18,7 @@ authors = [
     {name = "avizum", email = "juliusrt@outlook.com"},
 ]
 classifiers = [
-    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Natural Language :: English",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",

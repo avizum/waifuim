@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2023 Avimetry Development
+Copyright (c) 2024 avizum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,10 +27,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Sequence, TYPE_CHECKING, TypedDict
-
-if TYPE_CHECKING:
-    from typing_extensions import NotRequired
+from typing import NotRequired, Sequence, TypedDict
 
 
 class Tags(Enum):
@@ -42,12 +39,14 @@ class Tags(Enum):
     OPPAI = "OPPAI"
     SELFIES = "SELFIES"
     UNIFORM = "UNIFORM"
+    KAMISATO_AYAKA = "KAMISATO-AYAKA"
     ASS = "ASS"
     HENTAI = "HENTAI"
     MILF = "MILF"
     ORAL = "ORAL"
     PAIZURI = "PAIZURI"
     ECCHI = "ECCHI"
+    ERO = "ERO"
 
     @classmethod
     def from_str(cls, string: str) -> Tags | None:
@@ -71,8 +70,8 @@ class Orientation(Enum):
 
 
 class Order(Enum):
+    FAVORITES = "FAVORITES"
     FAVOURITES = "FAVOURITES"
-    FAVORITES = "FAVOURITES"
     UPLOADED = "UPLOADED_AT"
     UPLOADED_AT = "UPLOADED_AT"
     RANDOM = "RANDOM"
@@ -82,6 +81,7 @@ class ImageResponseData(TypedDict):
     """
     Represents the raw image response data from the API.
     """
+
     images: list[ImageData]
 
 
@@ -96,10 +96,11 @@ class ImageData(TypedDict):
     """
     Class representing the data of an image.
     """
+
     signature: str
     extension: str
     image_id: int
-    favourites: int
+    favorites: int
     dominant_color: str
     source: str
     uploaded_at: str
@@ -120,12 +121,13 @@ class ImageParams(TypedDict):
     gif: bool | None
     order_by: Order | None
     orientation: Orientation | None
-    many: bool | None
+    limit: NotRequired[int]
+    many: NotRequired[bool]
     included_files: Sequence[str] | None
     excluded_files: Sequence[str] | None
 
 
-class EditFavouriteParams(TypedDict):
+class EditfavoriteParams(TypedDict):
     user_id: int
     image_id: int
 
@@ -161,7 +163,7 @@ class Image:
     signature: str
     extension: str
     id: int
-    favourites: int
+    favorites: int
     dominant_color: str
     source: str
     uploaded_at: datetime | str | None
@@ -181,6 +183,7 @@ class Image:
 
     @classmethod
     def from_dict(cls, data: ImageData) -> Image:
+        print(data)
         try:
             uploaded_at = datetime.fromisoformat(data["uploaded_at"])
             liked_at = datetime.fromisoformat(data["liked_at"]) if data["liked_at"] else None
@@ -192,7 +195,7 @@ class Image:
             signature=data["signature"],
             extension=data["extension"],
             id=data["image_id"],
-            favourites=data["favourites"],
+            favorites=data["favorites"],
             dominant_color=data["dominant_color"],
             source=data["source"],
             uploaded_at=uploaded_at,

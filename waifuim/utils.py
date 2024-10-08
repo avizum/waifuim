@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2023 Avimetry Development
+Copyright (c) 2024 avizum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@ def generate_authorization_link(user_id: int, permissions: list[str]) -> str:
     Generates an authorization link for a user.
 
     Valid permissions are:
-        - `manage_favourites`
-        - `view_favourites`
+        - `manage_favorites`
+        - `view_favorites`
     """
     url = f"https://waifu.im/authorization/?user_id={user_id}"
     for permission in permissions:
@@ -44,8 +44,8 @@ def generate_deauthorization_link(user_id: int, permissions: list[str]) -> str:
     Generates an deauthorize link for a user.
 
     Valid permissions are:
-        - `manage_favourites`
-        - `view_favourites`
+        - `manage_favorites`
+        - `view_favorites`
     """
     url = f"https://waifu.im/authorization/revoke/?user_id={user_id}"
     for permission in permissions:

@@ -1,7 +1,7 @@
 """
 MIT License
 
-Copyright (c) 2023 Avimetry Development
+Copyright (c) 2024 avizum
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,13 @@ SOFTWARE.
 
 from __future__ import annotations
 
-from typing import Any, Literal, Sequence, overload
 from enum import Enum
+from typing import Any, Literal, overload, Sequence
+
 import aiohttp
 
 from .exceptions import Forbidden, HTTPException, NotFound, Unauthorized
-from .models import EditFavouriteParams, Image, ImageParams, ImageResponseData, Order, Orientation, Tags
+from .models import EditfavoriteParams, Image, ImageParams, ImageResponseData, Order, Orientation, Tags
 
 BASE_URL: str = "https://api.waifu.im"
 
@@ -65,7 +66,7 @@ class Client:
         self.session: aiohttp.ClientSession | None = session
         self.token: str = token
         self.headers: dict = {
-            "Accept-Version": "v4",
+            "Accept-Version": "v6",
             "User-Agent": f"aiohttp/{aiohttp.__version__}:{identifier}",
             "Authorization": f"Bearer {token}",
         }
@@ -124,12 +125,11 @@ class Client:
         gif: bool | None = ...,
         order_by: Order = ...,
         orientation: Orientation | None = ...,
-        multiple: Literal[False] = ...,
+        limit: int = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
         return_raw: Literal[False] = ...,
-    ) -> Image:
-        ...
+    ) -> list[Image]: ...
 
     @overload
     async def search(
@@ -142,30 +142,11 @@ class Client:
         gif: bool | None = ...,
         order_by: Order = ...,
         orientation: Orientation | None = ...,
-        multiple: Literal[True] = ...,
-        included_files: Sequence[str] | None = ...,
-        excluded_files: Sequence[str] | None = ...,
-        return_raw: Literal[False] = ...,
-    ) -> list[Image]:
-        ...
-
-    @overload
-    async def search(
-        self,
-        /,
-        *,
-        included_tags: Sequence[Tags | str] | None = ...,
-        excluded_tags: Sequence[Tags | str] | None = ...,
-        nsfw: bool = ...,
-        gif: bool | None = ...,
-        order_by: Order = ...,
-        orientation: Orientation | None = ...,
-        multiple: bool = ...,
+        limit: int = ...,
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
         return_raw: bool = True,
-    ) -> ImageResponseData:
-        ...
+    ) -> ImageResponseData: ...
 
     async def search(
         self,
@@ -177,11 +158,11 @@ class Client:
         gif: bool | None = None,
         order_by: Order = Order.RANDOM,
         orientation: Orientation | None = None,
-        multiple: bool = False,
+        limit: int = 1,
         included_files: Sequence[str] | None = None,
         excluded_files: Sequence[str] | None = None,
         return_raw: bool = False,
-    ) -> Image | list[Image] | ImageResponseData:
+    ) -> list[Image] | ImageResponseData:
         """
         Search for some images on the API.
 
@@ -227,7 +208,7 @@ class Client:
             "gif": gif,
             "order_by": order_by,
             "orientation": orientation,
-            "many": multiple,
+            "limit": limit,
             "included_files": included_files,
             "excluded_files": excluded_files,
         }
@@ -236,13 +217,10 @@ class Client:
         if return_raw:
             return resp
         image_data = resp["images"]
-        if len(image_data) == 1:
-            return Image.from_dict(image_data[0])
         return [Image.from_dict(image) for image in image_data]
 
-
     @overload
-    async def favourites(
+    async def favorites(
         self,
         /,
         *,
@@ -257,11 +235,10 @@ class Client:
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
         return_raw: Literal[False] = ...,
-    ) -> Image:
-        ...
+    ) -> Image: ...
 
     @overload
-    async def favourites(
+    async def favorites(
         self,
         /,
         *,
@@ -276,11 +253,10 @@ class Client:
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
         return_raw: Literal[False] = ...,
-    ) -> list[Image]:
-        ...
+    ) -> list[Image]: ...
 
     @overload
-    async def favourites(
+    async def favorites(
         self,
         /,
         *,
@@ -295,10 +271,9 @@ class Client:
         included_files: Sequence[str] | None = ...,
         excluded_files: Sequence[str] | None = ...,
         return_raw: bool = True,
-    ) -> ImageResponseData:
-        ...
+    ) -> ImageResponseData: ...
 
-    async def favourites(
+    async def favorites(
         self,
         /,
         *,
@@ -315,16 +290,16 @@ class Client:
         return_raw: bool = False,
     ) -> Image | list[Image] | ImageResponseData:
         """
-        Get a user's favourites.
+        Get a user's favorites.
 
         .. note::
-            The user must have authorized your application to access their favourites.
+            The user must have authorized your application to access their favorites.
             See :meth:`generate_authorization_link`.
 
         Parameters
         ----------
         user_id: :class:`int`
-            The ID of the user to get the favourites of.
+            The ID of the user to get the favorites of.
         included_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
             Will only return images with these tags.
         excluded_tags: Sequence[:class:`Tag` | :class:`str`] | :class:`None`
@@ -385,12 +360,12 @@ class Client:
             return Image.from_dict(image_data[0])
         return [Image.from_dict(image) for image in image_data]
 
-    async def favourites_insert(self, /, *, user_id: int, image: Image | int) -> None:
+    async def favorites_insert(self, /, *, user_id: int, image: Image | int) -> None:
         """
-        Insert an image into a user's favourites.
+        Insert an image into a user's favorites.
 
         .. note::
-            The user must have authorized your application to edit their favourites.
+            The user must have authorized your application to edit their favorites.
             See :meth:`utils.generate_authorization_link`.
 
         Parameters
@@ -398,13 +373,13 @@ class Client:
         user_id: :class:`int`
             The ID of the user to insert the image into.
         image: :class:`Image` | :class:`int`
-            The Image or Image ID of the image to insert to the user's favourites.
+            The Image or Image ID of the image to insert to the user's favorites.
 
         Raises
         ------
         :class:`HTTPException`
             Can occur if:
-            - Image already exists in the user's favourites.
+            - Image already exists in the user's favorites.
             - The image does not exist.
         :class:`Forbidden`
             You do not have permission to edit the user's favorites.
@@ -413,16 +388,16 @@ class Client:
         """
         if isinstance(image, Image):
             image = image.id
-        params: EditFavouriteParams = {"user_id": user_id, "image_id": image}
+        params: EditfavoriteParams = {"user_id": user_id, "image_id": image}
 
         return await self._request(Request("POST", "/fav/insert"), json=params)
 
-    async def favourites_delete(self, /, *, user_id: int, image: Image | int) -> None:
+    async def favorites_delete(self, /, *, user_id: int, image: Image | int) -> None:
         """
-        Remove an image from a user's favourites.
+        Remove an image from a user's favorites.
 
         .. note::
-            The user must have authorized your application to edit their favourites.
+            The user must have authorized your application to edit their favorites.
             See :meth:`utils.generate_authorization_link`.
 
         Parameters
@@ -430,13 +405,13 @@ class Client:
         user_id: :class:`int`
             The ID of the user to remove the image from.
         image: :class:`Image` | :class:`int`
-            The Image or Image ID of the image to remove from the user's favourites.
+            The Image or Image ID of the image to remove from the user's favorites.
 
         Raises
         ------
         :class:`HTTPException`
             Can occur if:
-            - Image dosen't exist in the user's favourites.
+            - Image dosen't exist in the user's favorites.
             - The image does not exist.
         :class:`Forbidden`
             You do not have permission to edit the user's favorites.
@@ -445,16 +420,16 @@ class Client:
         """
         if isinstance(image, Image):
             image = image.id
-        params: EditFavouriteParams = {"user_id": user_id, "image_id": image}
+        params: EditfavoriteParams = {"user_id": user_id, "image_id": image}
 
         return await self._request(Request("DELETE", "/fav/delete"), json=params)
 
-    async def favourites_toggle(self, /, *, user_id: int, image: Image | int) -> None:
+    async def favorites_toggle(self, /, *, user_id: int, image: Image | int) -> None:
         """
-        Insert or Reomve an image into a user's favourites.
+        Insert or Reomve an image into a user's favorites.
 
         .. note::
-            The user must have authorized your application to edit their favourites.
+            The user must have authorized your application to edit their favorites.
             See :meth:`utils.generate_authorization_link`.
 
         Parameters
@@ -462,7 +437,7 @@ class Client:
         user_id: :class:`int`
             The ID of the user to remove the image from.
         image: :class:`Image` | :class:`int`
-            The Image or Image ID of the image to insert or remove from the user's favourites.
+            The Image or Image ID of the image to insert or remove from the user's favorites.
 
         Raises
         ------
@@ -475,15 +450,15 @@ class Client:
         """
         if isinstance(image, Image):
             image = image.id
-        params: EditFavouriteParams = {"user_id": user_id, "image_id": image}
+        params: EditfavoriteParams = {"user_id": user_id, "image_id": image}
 
         return await self._request(Request("POST", "/fav/toggle"), json=params)
 
     # Aliases
-    favorites = favourites
-    favorites_insert = favourites_insert
-    favorites_delete = favourites_delete
-    favorites_toggle = favourites_toggle
+    favourites = favorites
+    favourites_insert = favorites_insert
+    favourites_delete = favorites_delete
+    favourites_toggle = favorites_toggle
 
     async def close(self):
         """
