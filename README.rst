@@ -34,7 +34,7 @@ To install, just run the following command:
 
 Requirements
 ~~~~~~~~~~~~
-- Python ≥3.10
+- Python ≥3.11
 
 - ``aiohttp``
 

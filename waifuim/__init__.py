@@ -27,7 +27,7 @@ from .exceptions import Forbidden, HTTPException, NotFound, Unauthorized, WaifuI
 from .models import Image, ImageResponseData, Order, Orientation, Tag, Tags
 from .utils import generate_authorization_link, generate_deauthorization_link
 
-__version__ = "1.0.3"
+__version__ = "1.1.0"
 
 __all__ = (
     "Client",
